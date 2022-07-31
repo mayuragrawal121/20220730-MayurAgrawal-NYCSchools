@@ -42,7 +42,6 @@ android {
 
 def retrofitVersion = '2.3.0'
 def rxJavaVersion = '2.0.1'
-def lifeCycleVersion = '1.1.1'
 def daggerVersion = '2.13'
 
 dependencies {
@@ -52,7 +51,6 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.4.2'
     implementation 'com.google.android.material:material:1.6.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-    implementation "android.arch.lifecycle:extensions:lifeCycleVersion"
 
     //ViewModel and livedata
     implementation "androidx.lifecycle:lifecycle-extensions:2.2.0"

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">NYC Schools</string>
+    <string name="app_name">NYC High Schools</string>
     <string name="action_settings">Settings</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
@@ -9,11 +9,11 @@
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
-    <string name="schools">Schools</string>
+    <string name="schools">NYC High Schools</string>
     <string name="generic_error">Please check your network connection or there is problem in our end, please try again later.</string>
     <string name="record_not_found">We are unable to process your request at this time, please try again later.</string>
-    <string name="please_wait">Please wait...</string>
-    <string name="school_details">School Details</string>
+    <string name="please_wait">Please wait…</string>
+    <string name="school_details">High School Details</string>
     <string name="sat_test_takers">Number of SAT Test Takers :</string>
     <string name="sat_avg_math_score">Average SAT Math Score :</string>
     <string name="sat_avg_reading_score">Average SAT Critical Reading Score :</string>

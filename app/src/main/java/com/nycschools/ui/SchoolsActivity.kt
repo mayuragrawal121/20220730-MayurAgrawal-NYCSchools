@@ -16,7 +16,8 @@ import com.nycschools.util.Loading
 import com.nycschools.vm.SchoolViewModel
 import javax.inject.Inject
 
-
+// Created this Activity to display all schools
+// extending with BaseActivity as Inject is required for this as per current requirement
 class SchoolsActivity : BaseActivity() {
     private lateinit var binding: ActivitySchoolsBinding
 
@@ -39,17 +40,25 @@ class SchoolsActivity : BaseActivity() {
 
         val adapter = SchoolsAdapter(object : ClickListener {
             override fun onClick(dbn: String) {
+                // Showing loading when trying to retrieve data from API.
                 loading.show()
+                // Calling below method to retrieve data from API.
                 viewModel.getSchoolDetails(dbn)
             }
         })
         setRecyclerViewAdapter(adapter = adapter)
+        // Showing loading when trying to retrieve data from API.
         loading.show()
+        // Calling below method to retrieve data from API.
         viewModel.getAllSchools()
+        // Observing schools list in below method.
         observeSchoolsData(adapter = adapter)
+        // Observing schools details in below method.
         observeSchoolDetailsData()
     }
 
+    // Created this method to set adapter on recyclerview,
+    // and add divider line between list items.
     private fun setRecyclerViewAdapter(adapter: SchoolsAdapter) {
         binding.recyclerview.adapter = adapter
         binding.recyclerview.addItemDecoration(
@@ -59,9 +68,13 @@ class SchoolsActivity : BaseActivity() {
         )
     }
 
+    // Created this method to observe schools list data and handle error.
     private fun observeSchoolsData(adapter: SchoolsAdapter) {
         viewModel.getSchools().observe(this) {
+            // Added this to dismiss loading dialog.
             loading.dismiss()
+            // Here checking null because returning null from viewModel if there is an error
+            // It can be network or server error
             it?.let {
                 adapter.setSchoolList(it)
             } ?: run {
@@ -70,9 +83,13 @@ class SchoolsActivity : BaseActivity() {
         }
     }
 
+    // Created this method to observe school details and handle error.
     private fun observeSchoolDetailsData() {
         viewModel.getSchoolDetails().observe(this) {
+            // Added this to dismiss loading dialog.
             loading.dismiss()
+            // Here checking null because returning null from viewModel if there is an error
+            // It can be network or server error
             it?.let { schoolDetails ->
                 navigateToSchoolDetailsActivity(schoolDetails)
             } ?: run {
@@ -81,11 +98,11 @@ class SchoolsActivity : BaseActivity() {
         }
     }
 
+    // Created this method to navigate on school details activity.
     private fun navigateToSchoolDetailsActivity(schoolDetails: SchoolDetails) {
         startActivity(
             Intent(
-                this,
-                SchoolDetailsActivity::class.java
+                this, SchoolDetailsActivity::class.java
             ).putExtras(Bundle().apply {
                 putParcelable(
                     KEY_SCHOOL_DETAILS, schoolDetails
@@ -94,6 +111,7 @@ class SchoolsActivity : BaseActivity() {
         )
     }
 
+    // Created this method to show SnackBar for error handling.
     private fun displayMessage(message: String) {
         Snackbar.make(
             binding.root, message, Snackbar.LENGTH_SHORT

@@ -1,33 +1,39 @@
-package com.nycschools.di.module;
+package com.nycschools.di.module
 
-import com.nycschools.service.RetrofitService;
+import com.nycschools.service.RetrofitService
+import dagger.Module
+import dagger.Provides
+import retrofit2.Retrofit
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
+import retrofit2.converter.gson.GsonConverterFactory
+import javax.inject.Singleton
 
-import javax.inject.Singleton;
-
-import dagger.Module;
-import dagger.Provides;
-import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
-import retrofit2.converter.gson.GsonConverterFactory;
+/**
+ * Created ApplicationModule for some app-level dependencies that do not fall into any category.
+ *
+ * Added this module in the ApplicationComponent module list to let dagger know about this module.
+ * */
 
 @Singleton
-@Module(includes = ViewModelModule.class)
-public class ApplicationModule {
-    private static final String BASE_URL = "https://data.cityofnewyork.us/resource/";
+@Module(includes = [ViewModelModule::class])
+object ApplicationModule {
+    private const val BASE_URL = "https://data.cityofnewyork.us/resource/"
 
+    @JvmStatic
     @Singleton
     @Provides
-    static Retrofit provideRetrofit() {
-        return new Retrofit.Builder()
-                .baseUrl(BASE_URL)
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
+    fun provideRetrofit(): Retrofit {
+        return Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
     }
 
+    @JvmStatic
     @Singleton
     @Provides
-    static RetrofitService provideRetrofitService(Retrofit retrofit) {
-        return retrofit.create(RetrofitService.class);
+    fun provideRetrofitService(retrofit: Retrofit): RetrofitService {
+        return retrofit.create(RetrofitService::class.java)
     }
 }
