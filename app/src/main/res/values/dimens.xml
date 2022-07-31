@@ -1,3 +1,9 @@
 <resources>
     <dimen name="fab_margin">16dp</dimen>
+    <dimen name="margin_14">14dp</dimen>
+    <dimen name="size_16">16sp</dimen>
+    <dimen name="elevation_1">1dp</dimen>
+    <dimen name="padding_10">10dp</dimen>
+    <dimen name="margin_15">15dp</dimen>
+    <dimen name="text_size_16">16sp</dimen>
 </resources>
