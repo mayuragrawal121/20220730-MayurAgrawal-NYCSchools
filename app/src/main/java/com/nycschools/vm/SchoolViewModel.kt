@@ -39,9 +39,9 @@ class SchoolViewModel @Inject constructor(private val repository: Repository) : 
         compositeDisposable.add(
             repository.getAllSchools().subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread()).subscribe({
-                    schools.postValue(it)
+                    schools.value = it
                 }, {
-                    schools.postValue(null)
+                    schools.value = null
                 })
         )
     }
@@ -64,7 +64,7 @@ class SchoolViewModel @Inject constructor(private val repository: Repository) : 
                     schoolsDetailsData.addAll(it)
                     parseSchoolsDataAndReturnSchoolDetails(dbn)
                 }, {
-                    schoolDetails.postValue(null)
+                    schoolDetails.value = null
                 })
         )
     }
@@ -72,8 +72,7 @@ class SchoolViewModel @Inject constructor(private val repository: Repository) : 
     // Created this method to parse schoolsDetailsData using dbn and post live data value
     // also used to return null if dbn is not found in schoolsDetailsData
     private fun parseSchoolsDataAndReturnSchoolDetails(dbn: String) {
-        val details = schoolsDetailsData.find { it.dbn == dbn }
-        details?.let { schoolDetails.postValue(it) } ?: run { schoolDetails.postValue(null) }
+        schoolDetails.value = schoolsDetailsData.find { it.dbn == dbn }
     }
 
     // Overriding this method to clear compositeDisposable
